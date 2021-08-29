@@ -11,8 +11,10 @@
           class="sf-header__logo"
         >
           <SfImage
-            src="/icons/logo.svg"
-            alt="Vue Storefront Next"
+            :src="logoConfig.logoSrc"
+            :alt="logoConfig.logoAlt"
+            :width="logoConfig.logoWidth"
+            :height="logoConfig.logoHeight"
             class="sf-header__logo-image"
           />
         </nuxt-link>
@@ -43,6 +45,7 @@
             />
           </SfButton>
           <SfButton
+            v-if="isWishlistEnabled"
             class="sf-button--pure sf-header__action"
             @click="toggleWishlistSidebar"
           >
@@ -180,6 +183,18 @@ export default defineComponent({
     SfOverlay,
   },
   directives: { clickOutside },
+  props: {
+    isWishlistEnabled: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+    logoConfig: {
+      type: Object,
+      default: () => ({}),
+      required: false,
+    },
+  },
   setup() {
     const { router } = useVueRouter();
     const { toggleCartSidebar, toggleWishlistSidebar, toggleLoginModal } = useUiState();
